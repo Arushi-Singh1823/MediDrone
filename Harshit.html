@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediDrone – Emergency Medical Drone System</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- GLOBAL ---------------- */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  background:#020d20;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* ---------------- HEADER ---------------- */
+.hero{
+  height:100vh;
+  background:url('https://cdn.pixabay.com/photo/2021/05/28/09/38/drone-6292645_1280.jpg') no-repeat center/cover;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  backdrop-filter:blur(4px);
+}
+
+.hero h1{
+  font-size:3.5rem;
+  font-weight:700;
+  color:#00eaff;
+  text-shadow:0 0 25px #00eaff;
+  animation:fadeIn 2s;
+}
+.hero p{
+  font-size:1.3rem;
+  margin-top:10px;
+  width:70%;
+  opacity:0.9;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.start-btn{
+  margin-top:25px;
+  padding:15px 40px;
+  background:#00eaff;
+  color:black;
+  border:none;
+  font-size:1.1rem;
+  border-radius:50px;
+  cursor:pointer;
+  box-shadow:0 0 20px #00eaff;
+  transition:0.3s;
+}
+.start-btn:hover{
+  transform:scale(1.1);
+}
+
+/* ---------------- STEPS CONTAINER ---------------- */
+.section{
+  padding:70px 20px;
+  text-align:center;
+}
+
+.section h2{
+  font-size:2.5rem;
+  color:#00eaff;
+  margin-bottom:20px;
+}
+
+/* Step 1 */
+#locationBox{
+  font-size:1.3rem;
+  margin-top:20px;
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.06);
+  display:inline-block;
+  box-shadow:0 0 25px rgba(0,255,255,0.2);
+}
+
+/* Step 2 Cards */
+.card-container{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.card{
+  width:270px;
+  padding:25px;
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(0,255,255,0.1);
+  cursor:pointer;
+  transition:0.3s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 30px #00eaff;
+}
+.card.selected{
+  border:2px solid #00eaff;
+  box-shadow:0 0 40px #00eaff;
+}
+
+/* Step 3 */
+.confirm-btn{
+  margin-top:30px;
+  padding:15px 45px;
+  background:#ff003c;
+  border:none;
+  color:white;
+  font-size:1.3rem;
+  border-radius:50px;
+  cursor:pointer;
+  box-shadow:0 0 25px #ff003c;
+  transition:0.3s;
+}
+.confirm-btn:hover{
+  transform:scale(1.1);
+}
+
+/* Countdown */
+#countdown{
+  margin-top:25px;
+  font-size:3rem;
+  font-weight:600;
+  color:#00ff9d;
+  text-shadow:0 0 20px #00ffbb;
+  animation:pulse 1s infinite alternate;
+}
+
+@keyframes pulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.15);}
+}
+
+/* 🚁 MAIN INFO SECTION */
+.drone-info-section {
+    margin: 80px auto 40px;
+    max-width: 1100px;
+    padding: 40px;
+    background: rgba(0, 255, 255, 0.06);
+    border: 2px solid #00eaff;
+    border-radius: 18px;
+    text-align: center;
+    color: #e6faff;
+    box-shadow: 0 0 30px #00eaff;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Title */
+.drone-info-section h2 {
+    font-size: 2.4rem;
+    color: #00eaff;
+    text-shadow: 0 0 10px #00eaff;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Layout for images + text */
+.drone-info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.drone-info-image img {
+    width: 220px;
+    animation: float 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 12px #00d5ff);
+}
+
+/* Description */
+.drone-info-section p {
+    flex: 1;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #c9faff;
+}
+
+/* Image Gallery */
+.drone-info-gallery {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gallery-img {
+    width: 180px;
+    border-radius: 10px;
+    transition: 0.3s;
+    filter: drop-shadow(0 0 8px #00eaff);
+}
+
+.gallery-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 18px #00eaff;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- TEAM SECTION ---------------- */
+.team-section{
+  padding:70px 20px;
+}
+
+.team-section h2{
+  font-size:2.7rem;
+  color:#00eaff;
+  text-align:center;        
+  width:100%;               
+  display:block;            
+}
+.member img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #00eaff;
+  box-shadow:0 0 25px #00eaff;
+  margin-bottom:15px;
+}
+.member-box{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+.member{
+  width:280px;
+  padding:25px;
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(0,255,255,0.15);
+}
+.member h3{
+  margin-top:10px;
+  font-size:1.5rem;
+  color:#00eaff;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer{
+  margin-top:50px;
+  padding:30px;
+  text-align:center;
+  background:#000914;
+  color:#00eaff;
+  border-top:2px solid #00eaff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ---------------- HERO ---------------- -->
+<div class="hero">
+  <h1>MediDrone</h1>
+  <p>An AI-powered Emergency Medical Drone Dispatch System created by PSIT Pharmacy Institute.</p>
+  <button class="start-btn" onclick="scrollToStep1()">Start Emergency Request</button>
+</div>
+
+<!-- ---------------- STEP 1 ---------------- -->
+<div class="section" id="step1">
+  <h2>Step 1 — Access Your Location</h2>
+  <button class="start-btn" onclick="getLocation()">Detect My Location</button>
+
+  <div id="locationBox">Your location will appear here...</div>
+</div>
+
+<!-- ---------------- STEP 2 ---------------- -->
+<div class="section" id="step2">
+  <h2>Step 2 — Select Emergency Type</h2>
+
+  <div class="card-container">
+    <div class="card" onclick="selectEmergency('Asthma')">
+      <h3>🫁 Asthma Attack</h3>
+      <p>Need an inhaler immediately</p>
+    </div>
+
+    <div class="card" onclick="selectEmergency('Cardiac')">
+      <h3>❤️ Cardiac Support</h3>
+      <p>Need emergency cardiac aid</p>
+    </div>
+
+    <div class="card" onclick="selectEmergency('Accident')">
+      <h3>🚑 Accident / Trauma</h3>
+      <p>Need first aid kit urgently</p>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------- STEP 3 ---------------- -->
+<div class="section" id="step3">
+  <h2>Step 3 — Confirm Dispatch</h2>
+  <button class="confirm-btn" onclick="startCountdown()">Confirm Emergency Dispatch</button>
+
+  <div id="countdown"></div>
+
+  <img class="drone-fly" id="droneImg"
+  src="https://cdn.pixabay.com/photo/2017/01/31/14/50/drone-2025511_1280.png"
+  style="display:none;">
+</div>
+
+<!-- 🚁 MEDICAL DRONE INFO SECTION -->
+<div class="drone-info-section">
+
+    <h2>MediDrone — AI Powered Emergency Medical Drone</h2>
+
+    <div class="drone-info-content">
+
+        <div class="drone-info-image">
+            <img src="images/drone1.jpg" alt="MediDrone view 1">
+        </div>
+
+        <p>
+            MediDrone is an advanced AI-powered emergency medical drone designed to deliver
+            life-saving medicines within minutes. When an emergency request is made, the system
+            instantly detects the patient’s live location, analyzes their medical need, and 
+            dispatches the nearest drone with precision.
+            <br><br>
+            Equipped with smart navigation, real-time tracking, and automated route optimization, 
+            MediDrone drastically reduces response time during asthma attacks, cardiac emergencies,
+            allergic reactions, and other life-critical situations.
+        </p>
+
+        <div class="drone-info-image">
+            <img src="images/drone2.jpg" alt="MediDrone view 2">
+        </div>
+
+    </div>
+
+    <div class="drone-info-gallery">
+        <img src="images/drone3.jpg" alt="Drone top view" class="gallery-img">
+        <img src="images/drone4.jpg" alt="Drone medical payload" class="gallery-img">
+        <img src="images/drone5.jpg" alt="Drone side view" class="gallery-img">
+    </div>
+
+</div>
+
+<!-- ---------------- TEAM SECTION ---------------- -->
+<div class="team-section">
+  <h2>Innovator & Team Behind MediDrone</h2>
+
+  <div class="member-box">
+
+    <!-- Mentor -->
+    <div class="member" style="border:2px solid #00eaff; box-shadow:0 0 35px #00eaff;">
+      <img src="images/ruchi maam.jpg" alt="Prof. Dr. Ruchi Tiwari" />
+      <h3>Mentor</h3>
+      <p><strong>Prof Dr. Ruchi Tiwari</strong></p>
+      <p>PSIT Pharmacy • Guiding Mentor</p>
+    </div>
+
+    <div class="member" style="border:2px solid #00eaff; box-shadow:0 0 35px #00eaff;">
+      <img src="images/arushi.jpg" alt="Arushi Singh">
+      <h3>Team Leader</h3>
+      <p><strong>Arushi Singh</strong></p>
+      <p>CS–AIML • Lead Technical Innovator</p>
+    </div>
+
+    <div class="member" style="border:2px solid #00eaff; box-shadow:0 0 35px #00eaff;">
+      <img src="images/harshit.jpg" alt="Harshit Arora">
+      <h3>Team Leader</h3>
+      <p><strong>Harshit Arora</strong></p>
+      <p>Lead Innovator</p>
+    </div>
+
+    <div class="member" style="border:2px solid #00eaff; box-shadow:0 0 35px #00eaff;">
+      <img src="images/devansh.jpg" alt="Devansh Paliwal">
+      <h3>Team Member</h3>
+      <p><strong>Devansh Paliwal</strong></p>
+      <p>Lead Hardware Developer</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ---------------- FOOTER ---------------- -->
+<footer>
+  © 2025 MediDrone Project • PSIT Pharmacy Institute • All Rights Reserved
+</footer>
+
+<!-- ---------------- JAVASCRIPT ---------------- -->
+<script>
+function scrollToStep1(){
+  document.getElementById("step1").scrollIntoView({behavior:"smooth"});
+}
+
+let userLat="", userLon="", emergencyType="";
+
+function getLocation(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(showPos);
+  }else{
+    alert("Geolocation is not supported by your browser");
+  }
+}
+
+function showPos(position){
+  userLat = position.coords.latitude;
+  userLon = position.coords.longitude;
+  document.getElementById("locationBox").innerHTML =
+    "📍 Latitude: " + userLat + "<br>📍 Longitude: " + userLon;
+
+  document.getElementById("step2").scrollIntoView({behavior:"smooth"});
+}
+
+function selectEmergency(type){
+  emergencyType = type;
+
+  let cards = document.querySelectorAll(".card");
+  cards.forEach(c => c.classList.remove("selected"));
+  
+  event.currentTarget.classList.add("selected");
+
+  document.getElementById("step3").scrollIntoView({behavior:"smooth"});
+}
+
+function startCountdown(){
+  let sec=180;
+
+  document.getElementById("droneImg").style.display="block";
+
+  let countdown = setInterval(()=>{
+    let m=Math.floor(sec/60);
+    let s=sec%60;
+    document.getElementById("countdown").innerHTML =
+      m + " : " + (s<10 ? "0"+s : s);
+
+    sec--;
+
+    if(sec<0){
+      clearInterval(countdown);
+      document.getElementById("countdown").innerHTML="Drone Arrived!";
+    }
+  },1000);
+}
+</script>
+
+</body>
+</html>
