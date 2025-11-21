@@ -212,15 +212,9 @@ body{
     box-shadow: 0 0 18px #00eaff;
 }
 
-/* Animations */
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ---------------- TEAM SECTION ---------------- */
@@ -281,6 +275,12 @@ footer{
 
 <!-- ---------------- HERO ---------------- -->
 <div class="hero">
+
+  <!-- ⭐ Added Logo -->
+  <img src="images/logo.jpg"
+       alt="MediDrone Logo"
+       style="width:180px; margin-bottom:20px; filter:drop-shadow(0 0 20px #00eaff);">
+
   <h1>MediDrone</h1>
   <p>An AI-powered Emergency Medical Drone Dispatch System created by PSIT Pharmacy Institute.</p>
   <button class="start-btn" onclick="scrollToStep1()">Start Emergency Request</button>
@@ -290,7 +290,6 @@ footer{
 <div class="section" id="step1">
   <h2>Step 1 — Access Your Location</h2>
   <button class="start-btn" onclick="getLocation()">Detect My Location</button>
-
   <div id="locationBox">Your location will appear here...</div>
 </div>
 
@@ -330,6 +329,11 @@ footer{
 
 <!-- 🚁 MEDICAL DRONE INFO SECTION -->
 <div class="drone-info-section">
+
+    <!-- ⭐ Added Logo in Middle -->
+    <img src="/mnt/data/de5576ae-beca-4a2a-b779-caef92e9ac65.jpg"
+         alt="MediDrone Logo"
+         style="width:160px; margin-bottom:25px; filter:drop-shadow(0 0 12px #00eaff);">
 
     <h2>MediDrone — AI Powered Emergency Medical Drone</h2>
 
@@ -466,5 +470,4 @@ function startCountdown(){
 
 </body>
 </html>
-
 
